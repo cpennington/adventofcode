@@ -19,9 +19,14 @@ library
                      , Advent.Day1
                      , Advent.Day2
                      , Advent.Day3
+                     , Advent.Day4
+                     , Advent.Day5
   build-depends:       base >= 4.7 && < 5
                      , split
                      , containers
+                     , cryptohash
+                     , text
+                     , bytestring
   default-language:    Haskell2010
 
 executable adventofcode-exe

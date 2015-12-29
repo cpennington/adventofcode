@@ -5,6 +5,8 @@ import System.Environment (getArgs)
 import Advent.Day1
 import Advent.Day2
 import Advent.Day3
+import Advent.Day4
+import Advent.Day5
 
 main :: IO ()
 main = do
@@ -19,6 +21,10 @@ main = do
         (2, "b") -> show $ Advent.Day2.solveB input
         (3, "a") -> show $ Advent.Day3.solveA input
         (3, "b") -> show $ Advent.Day3.solveB input
+        (4, "a") -> show $ Advent.Day4.solveA input
+        (4, "b") -> show $ Advent.Day4.solveB input
+        (5, "a") -> show $ Advent.Day5.solveA input
+        (5, "b") -> show $ Advent.Day5.solveB input
         _        -> day ++ puzzle ++ " isn't ready yet!"
 
   putStrLn result
