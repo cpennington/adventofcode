@@ -8,6 +8,7 @@ import Advent.Day3
 import Advent.Day4
 import Advent.Day5
 import Advent.Day6
+import Advent.Day7
 
 main :: IO ()
 main = do
@@ -28,6 +29,8 @@ main = do
         (5, "b") -> show $ Advent.Day5.solveB input
         (6, "a") -> Advent.Day6.solveA input
         (6, "b") -> Advent.Day6.solveB input
+        (7, "a") -> Advent.Day7.solveA input
+        (7, "b") -> Advent.Day7.solveB input
         _        -> day ++ puzzle ++ " isn't ready yet!"
 
   putStrLn result
