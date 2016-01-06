@@ -1,4 +1,10 @@
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 module Advent.Day7 where
+
+import Advent
 
 import Prelude hiding (lookup)
 import Text.Parsec (parse, choice, try, (<|>), Parsec)
@@ -8,6 +14,7 @@ import Data.Map (insert, empty, lookup, fromList, Map)
 import Data.Word (Word16)
 import Data.Bits (complement, (.&.), (.|.), shift)
 import Control.Monad.State.Lazy (get, put, evalState, State)
+import Data.Proxy (Proxy(..))
 
 type Wire = String
 type Value = Word16
@@ -24,7 +31,6 @@ data Instruction = Feed Atom
   deriving Show
 type WiringParser = Parsec String () (Wire, Instruction)
 type InstParser = Parsec String () Instruction
-
 
 wire :: Parsec String () Wire
 wire = many1 letter
@@ -118,10 +124,12 @@ evalInst (Or left right) = (.|.) <$> lookupAtom left <*> lookupAtom right
 evalInst (LShift wire val) = flip shift val <$> lookupAtom wire
 evalInst (RShift wire val) = flip shift (-val) <$> lookupAtom wire
 
-solveA input = case parse wiresP "" input of
-  Left err -> show err
-  Right ws -> show $ evalWire "a" ws
+instance Solution 7 "a" where
+    solve (Input input) = case parse wiresP "" input of
+        Left err -> Output $ show err
+        Right ws -> Output $ show $ evalWire "a" ws
 
-solveB input = case parse wiresP "" input of
-  Left err -> show err
-  Right ws -> show $ evalWire "a" (ws ++ [("b", Feed $ Value $ evalWire "a" ws)])
+instance Solution 7 "b" where
+    solve (Input input) = case parse wiresP "" input of
+        Left err -> Output $ show err
+        Right ws -> Output $ show $ evalWire "a" (ws ++ [("b", Feed $ Value $ evalWire "a" ws)])
