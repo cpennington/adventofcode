@@ -79,15 +79,18 @@ tsp isBetter m = case bestPath isBetter (Path [] 0) Nothing (paths m) of
     Just (Path p c) -> c
 
 isBetter :: (Show a, Show c, Num c) => PathCmp a c -> PathCmp a c -> PathAccum a c
-isBetter _ _ current Nothing (Choice node []) = traceResult (current, Nothing :: Maybe (Step String Integer), node) $ Just $ current .+. node
-isBetter better strictlyBetter current Nothing choice = traceResult (current, Nothing :: Maybe (Step String Integer), choice) $ bestPath (isBetter better strictlyBetter) (current .+. cNode choice) Nothing (cNext choice)
-isBetter better strictlyBetter current (Just best) choice = traceResult (current, best, choice) $ if best `strictlyBetter` current'
-    then Just best
-    else case cNext choice of
-            [] -> betterPath better (Just best) (Just current')
-            next -> bestPath (isBetter better strictlyBetter) current' (Just best) next
+isBetter better strictlyBetter = f
     where
-        current' = current .+. cNode choice
+        accum = isBetter better strictlyBetter
+        f current Nothing (Choice node []) = Just $ current .+. node
+        f current Nothing choice = bestPath accum (current .+. cNode choice) Nothing (cNext choice)
+        f current (Just best) choice = if best `strictlyBetter` current'
+            then Just best
+            else case cNext choice of
+                    [] -> betterPath better (Just best) (Just current')
+                    next -> bestPath accum current' (Just best) next
+            where
+                current' = current .+. cNode choice
 
 instance Solution 9 "a" where
     solve (Input input) = Output $ show $ tsp (isBetter (.<.) (.<.)) $ parseAll input
