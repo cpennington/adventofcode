@@ -10,6 +10,7 @@ module Advent where
 import GHC.TypeLits
 import Data.Proxy
 import Data.Reflection (reifyNat, reifySymbol, reflect)
+import qualified Data.Text as T
 
 newtype Input (d :: Nat) (p :: Symbol) = Input String
   deriving Show
@@ -28,3 +29,5 @@ solvePuzzle :: (Solution d p) => Integer -> String -> IO (Output d p)
 solvePuzzle day puzzle = do
   input <- puzzleInput day puzzle
   return $ solve input
+
+strip = T.unpack . T.strip . T.pack
