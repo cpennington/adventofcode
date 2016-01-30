@@ -12,6 +12,7 @@ import Advent.Day5
 import Advent.Day6
 import Advent.Day7
 import Advent.Day8
+import Advent.Day9
 import Data.Reflection (reflect, reifyNat)
 
 import Data.Reflection (reifyNat, reifySymbol, reflect)
@@ -39,6 +40,8 @@ main = do
         (7, "b") -> show <$> (solvePuzzle 7 "b" :: IO (Output 7 "a"))
         (8, "a") -> show <$> (solvePuzzle 8 "a" :: IO (Output 8 "a"))
         (8, "b") -> show <$> (solvePuzzle 8 "b" :: IO (Output 8 "b"))
+        (9, "a") -> show <$> (solvePuzzle 9 "a" :: IO (Output 9 "a"))
+        (9, "b") -> show <$> (solvePuzzle 9 "b" :: IO (Output 9 "b"))
         _        -> return $ day ++ puzzle ++ " isn't ready yet!"
 
   putStrLn result
