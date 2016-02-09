@@ -1,7 +1,6 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-
+#! /usr/bin/env stack
+-- stack runghc
+--
 module Advent.Day9 where
 
 import Advent
@@ -92,9 +91,13 @@ isBetter better strictlyBetter = f
             where
                 current' = current .+. cNode choice
 
-instance Solution 9 "a" where
-    solve (Input input) = Output $ show $ tsp (isBetter (.<.) (.<.)) $ parseAll input
-        where (.<.) = (<) `on` pCost
+solveA input = tsp (isBetter (.<.) (.<.)) $ parseAll input
+    where (.<.) = (<) `on` pCost
 
-instance Solution 9 "b" where
-    solve (Input input) = Output $ show $ tsp (isBetter ((>) `on` pCost) (const $ const False)) $ parseAll input
+solveB input = tsp (isBetter ((>) `on` pCost) (const $ const False)) $ parseAll input
+
+main :: IO ()
+main = do
+  input <- readFile $ "input/9.txt"
+  print $ solveA input
+  print $ solveB input

@@ -1,5 +1,9 @@
+#! /usr/bin/env stack
+-- stack runghc
+
 module Advent.Day5 where
 
+import Advent
 import Data.List (isInfixOf)
 
 banned :: String -> Bool
@@ -34,3 +38,7 @@ solveA = length . filter vowels . filter twice . filter banned . words
 
 solveB :: String -> Int
 solveB = length . filter surround . filter repeatPairs . words
+
+main = do
+    solvePuzzle 5 solveA
+    solvePuzzle 5 solveB

@@ -1,3 +1,6 @@
+#! /usr/bin/env stack
+-- stack runghc
+
 module Advent.Day4 where
 
 import Advent
@@ -14,3 +17,7 @@ check count base num = B.isPrefixOf target $ digestToHexByteString $ hashFinaliz
 
 solveA input = findIndex (check 5 $ strip input) [0..]
 solveB input = findIndex (check 6 $ strip input) [0..]
+
+main = do
+    solvePuzzle 4 solveA
+    solvePuzzle 4 solveB

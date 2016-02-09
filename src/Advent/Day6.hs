@@ -1,4 +1,9 @@
+#! /usr/bin/env stack
+-- stack runghc
+--
 module Advent.Day6 where
+
+import Advent
 
 import Text.Parsec.Char (string, digit, endOfLine)
 import Text.Parsec ((<|>), many, Parsec, parse, try)
@@ -78,3 +83,7 @@ solveA input = case parse commands "" input of
 solveB input = case parse commands "" input of
   Left err -> show err
   Right cmds -> show $ sum $ elems $ foldl' updateB M.empty cmds
+
+main = do
+    solvePuzzle 6 solveA
+    solvePuzzle 6 solveB

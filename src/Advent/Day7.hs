@@ -1,7 +1,5 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-
+#! /usr/bin/env stack
+-- stack runghc
 module Advent.Day7 where
 
 import Advent
@@ -124,12 +122,14 @@ evalInst (Or left right) = (.|.) <$> lookupAtom left <*> lookupAtom right
 evalInst (LShift wire val) = flip shift val <$> lookupAtom wire
 evalInst (RShift wire val) = flip shift (-val) <$> lookupAtom wire
 
-instance Solution 7 "a" where
-    solve (Input input) = case parse wiresP "" input of
-        Left err -> Output $ show err
-        Right ws -> Output $ show $ evalWire "a" ws
+solveA input = case parse wiresP "" input of
+    Left err -> show $ err
+    Right ws -> show $ evalWire "a" ws
 
-instance Solution 7 "b" where
-    solve (Input input) = case parse wiresP "" input of
-        Left err -> Output $ show err
-        Right ws -> Output $ show $ evalWire "a" (ws ++ [("b", Feed $ Value $ evalWire "a" ws)])
+solveB input = case parse wiresP "" input of
+    Left err -> show err
+    Right ws -> show $ evalWire "a" (ws ++ [("b", Feed $ Value $ evalWire "a" ws)])
+
+main = do
+    solvePuzzle 7 solveA
+    solvePuzzle 7 solveB

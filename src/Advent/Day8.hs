@@ -1,6 +1,5 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+#! /usr/bin/env stack
+-- stack runghc
 
 module Advent.Day8 where
 
@@ -27,10 +26,12 @@ encode s = '"':_encode s
     _encode [] = '"':[]
     _encode (c:s) = c:_encode s
 
-instance Solution 8 "a" where
-    solve (Input input) = Output $ show $ sum (map length words) - sum (map (length . unencode) words)
-      where words = filter ((>1) . length) $ lines input
+solveA input = sum (map length words) - sum (map (length . unencode) words)
+  where words = filter ((>1) . length) $ lines input
 
-instance Solution 8 "b" where
-    solve (Input input) = Output $ show $ sum (map (length . encode) words) - sum (map length words)
-      where words = filter ((>1) . length) $ lines input
+solveB input = sum (map (length . encode) words) - sum (map length words)
+  where words = filter ((>1) . length) $ lines input
+
+main = do
+    solvePuzzle 8 solveA
+    solvePuzzle 8 solveB

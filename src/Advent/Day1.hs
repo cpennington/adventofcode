@@ -1,4 +1,9 @@
+#! /usr/bin/env stack
+-- stack runghc
+
 module Advent.Day1 where
+
+import Advent
 
 value :: Char -> Int
 value '(' = 1
@@ -11,3 +16,6 @@ solveA input = sum $ map value input
 solveB :: String -> Int
 solveB input = length $ takeWhile (>= 0) $ scanl (+) 0 $ map value input
 
+main = do
+    solvePuzzle 1 solveA
+    solvePuzzle 1 solveB

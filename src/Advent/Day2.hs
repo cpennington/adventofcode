@@ -1,5 +1,9 @@
+#! /usr/bin/env stack
+-- stack runghc
+
 module Advent.Day2 where
 
+import Advent
 import Data.List.Split (splitOn)
 
 type Box = (Int, Int, Int)
@@ -28,3 +32,6 @@ solveB :: String -> Int
 solveB = sum . map amount . parseAll
   where amount box = minimum (perimeters box) + volume box
 
+main = do
+    solvePuzzle 2 solveA
+    solvePuzzle 2 solveB

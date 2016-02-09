@@ -1,5 +1,9 @@
+#! /usr/bin/env stack
+-- stack runghc
+
 module Advent.Day3 where
 
+import Advent
 import Data.Set (fromList)
 
 data Dir = N | S | E | W
@@ -30,3 +34,7 @@ robo dirs = santa es ++ santa os
   where (es, os) = split dirs
 solveA = length . fromList . santa . parseAll
 solveB = length . fromList . robo . parseAll
+
+main = do
+    solvePuzzle 3 solveA
+    solvePuzzle 3 solveB

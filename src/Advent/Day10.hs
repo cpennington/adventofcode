@@ -1,6 +1,5 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+#! /usr/bin/env stack
+-- stack runghc
 
 module Advent.Day10 where
 
@@ -13,8 +12,12 @@ lookAndSay input = concatMap lookAndSay1 $ group input
         lookAndSay1 :: String -> String
         lookAndSay1 xs = show (length xs) ++ [head xs]
 
-instance Solution 10 "a" where
-    solve (Input input) = Output $ show $ length $ (iterate lookAndSay $ strip input) !! 40
+lookAndSayN n input = length $ (iterate lookAndSay $ strip input) !! n
 
-instance Solution 10 "b" where
-    solve (Input input) = Output $ show $ length $ (iterate lookAndSay $ strip input) !! 50
+solveA input = length $ (iterate lookAndSay $ strip input) !! 40
+solveB input = length $ (iterate lookAndSay $ strip input) !! 50
+
+main :: IO ()
+main = do
+    solvePuzzle 10 $ lookAndSayN 40
+    solvePuzzle 10 $ lookAndSayN 50
